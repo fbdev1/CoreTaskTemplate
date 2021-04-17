@@ -13,7 +13,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     }
 
-    Connection connection = Util.getMySQLConnection();
+   private static Connection connection = Util.getMySQLConnection();
 
     public void createUsersTable() {
         try (Statement st = connection.createStatement()) {
