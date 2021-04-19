@@ -1,10 +1,8 @@
 package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,8 +57,10 @@ public class UserDaoJDBCImpl implements UserDao {
     }
 
     public void removeUserById(long id) {
-        try (Statement st = connection.createStatement()) {
-            if (st.executeUpdate("delete from users where id =" + id)>0) {
+        String sql = "delete from users where id = ?";
+        try (PreparedStatement st = connection.prepareStatement(sql)) {
+            st.setLong(1,id);
+            if (st.executeUpdate()>0) {
                 System.out.println("Запись удалена");
             }
         } catch (SQLException e) {
