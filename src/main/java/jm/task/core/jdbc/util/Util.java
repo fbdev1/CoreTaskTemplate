@@ -58,6 +58,7 @@ public class Util {
             if (!conn.isClosed()) {
                 System.out.println("Соединение с БД установленно!");
             }
+
         } catch (SQLException e) {
             System.err.println("Не удалось загрузить класс драйвера");
         }

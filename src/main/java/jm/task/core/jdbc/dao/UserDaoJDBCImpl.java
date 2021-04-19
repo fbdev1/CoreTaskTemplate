@@ -37,7 +37,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void dropUsersTable() {
         try (Statement st = connection.createStatement()) {
-            st.execute("drop table users;");
+            st.executeUpdate("drop table users;");
             if (st.execute("SHOW TABLES FROM `mydbtest` like 'user';")) {
                 System.out.println("Таблица удалена");
             }
@@ -50,7 +50,7 @@ public class UserDaoJDBCImpl implements UserDao {
         String zapros = "insert into users (name, lastName, age) values ('" + name + "', '" + lastName + "', " + age + ")";
         try (Statement st = connection.createStatement()) {
 
-            if (!st.execute(zapros)) {
+            if (st.executeUpdate(zapros)>0) {
                 System.out.println("User с именем – "+name+" добавлен в базу данных.");
             }
         } catch (SQLException e) {
@@ -60,7 +60,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void removeUserById(long id) {
         try (Statement st = connection.createStatement()) {
-            if (!st.execute("delete from users where id =" + id)) {
+            if (st.executeUpdate("delete from users where id =" + id)>0) {
                 System.out.println("Запись удалена");
             }
         } catch (SQLException e) {
@@ -88,7 +88,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
     public void cleanUsersTable() {
         try (Statement st = connection.createStatement()) {
-            if (!st.execute("delete from users")) {
+            if (st.executeUpdate("delete from users")>0) {
                 System.out.println("Все записи удалены");
             }
         } catch (SQLException e) {
